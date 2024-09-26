@@ -14,11 +14,11 @@ datasource db {
 }
 
 model Product {
-  id Int @default(autoincrement()) @id
-  name String
+  id        String   @id @default(uuid()) 
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  price Float
+  price     Float
   description String?
-  available Boolean @default(true)
+  available Boolean  @default(true)
 }

@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Prisma, Product as PrismaProduct } from "@prisma/client";
 
-export class Product implements PrismaProduct  {
+export class Product implements PrismaProduct {
     @ApiProperty({
         description: 'The unique identifier for the product',
-        type: Number,
+        type: String,
     })
-    id: number;
+    id: string;
 
     @ApiProperty({
         description: 'The name of the product',
