@@ -19,7 +19,7 @@ export class ProductService {
     return this.dbService.product.findMany()
   }
 
-  async findOne(id: number): Promise<Product> {
+  async findOne(id: string): Promise<Product> {
     return this.dbService.product.findUnique({
       where: {
         id,
