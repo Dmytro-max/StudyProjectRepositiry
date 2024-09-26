@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:14
+    restart: always
+    container_name: pharmacy_postgres
+    environment:
+      POSTGRES_DB: "pharmacy"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    ports:
+      - "5432:5432"
+    volumes: 
+      - pgdata2:/var/lib/postgresql/data  # Updated to use a defined volume
+
+volumes:
+  pgdata2:  # Declare the pgdata2 volume here
+    driver: local  # Use the local driver for storing data
