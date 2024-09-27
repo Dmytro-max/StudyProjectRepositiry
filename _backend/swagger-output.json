@@ -1,0 +1,253 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/products": {
+      "post": {
+        "operationId": "ProductController_create",
+        "summary": "Create new product",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The product has been successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request."
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      },
+      "get": {
+        "operationId": "ProductController_findAll",
+        "summary": "Retrieve all products",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of all products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "operationId": "ProductController_findOne",
+        "summary": "Retrieve a product by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "The unique identifier of the product",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The product details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      },
+      "patch": {
+        "operationId": "ProductController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      },
+      "delete": {
+        "operationId": "ProductController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Products"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "CHNU pharmacy study project",
+    "description": "API for study project",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "CHNU-pharmacy",
+      "description": ""
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateProductDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The name of the product"
+          },
+          "price": {
+            "type": "number",
+            "description": "The price of the product"
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the product"
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Indicates whether the product is available for purchase",
+            "default": true
+          }
+        },
+        "required": [
+          "name",
+          "price"
+        ]
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The unique identifier for the product"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the product"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time when the product was created"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date and time when the product was last updated"
+          },
+          "price": {
+            "type": "number",
+            "description": "The price of the product"
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the product"
+          },
+          "available": {
+            "type": "boolean",
+            "description": "Indicates whether the product is available for purchase",
+            "default": true
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "createdAt",
+          "updatedAt",
+          "price",
+          "description",
+          "available"
+        ]
+      },
+      "UpdateProductDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}
