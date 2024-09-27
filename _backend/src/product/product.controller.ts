@@ -6,8 +6,8 @@ import { Prisma } from '@prisma/client';
 import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Product } from './entities/product.entity';
 
-@ApiTags('Product')
-@Controller('product')
+@ApiTags('Products')
+@Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) { }
 
