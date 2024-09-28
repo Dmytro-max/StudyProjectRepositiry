@@ -81,7 +81,7 @@
             "in": "path",
             "description": "The unique identifier of the product",
             "schema": {
-              "type": "number"
+              "type": "string"
             }
           }
         ],

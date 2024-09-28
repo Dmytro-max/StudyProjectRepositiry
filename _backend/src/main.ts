@@ -6,6 +6,12 @@ import { writeFileSync } from 'fs';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.enableCors({
+    origin: '*', // Adjust to the URL of your frontend (or use '*' for all origins)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  });
+
   const config = new DocumentBuilder()
     .setTitle('CHNU pharmacy study project')
     .setDescription('API for study project')

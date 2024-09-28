@@ -36,7 +36,7 @@ export class ProductController {
     name: 'id',
     required: true,
     description: 'The unique identifier of the product',
-    type: Number,
+    type: String,
   })
   @ApiResponse({
     status: 200,
