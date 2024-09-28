@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "swagger": "npx swagger-typescript-api -p ../_backend/swagger-output.json -o ./src/api --axios --modular"
+    "swagger": "npx swagger-typescript-api -p ../_backend/swagger-output.json -o ./src/api --modular",
+    "swagger2": "npx openapi-typescript-codegen --input ../_backend/swagger-output.json --output ./src/api --exportCore false"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",

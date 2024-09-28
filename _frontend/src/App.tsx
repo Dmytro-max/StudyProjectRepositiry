@@ -1,12 +1,9 @@
-import { Container, Switch } from "@mui/material";
+import { Container } from "@mui/material";
 import Header from "./componets/Header";
 import "./App.css";
-import ProductGrid from "./componets/ProductsGrid";
-import testProducts from "./common/testProductData";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Fixed the import for Router
 import ProductDetails from "./componets/ProductDetails";
-
-const products = testProducts;
+import Home from "./componets/Home";
 
 function App() {
   return (
@@ -15,7 +12,7 @@ function App() {
       <Container>
         <Router>
           <Routes>
-            <Route path="/" element={<ProductGrid products={products} />} />
+            <Route path="/" element={<Home />} />
             <Route path="/product/:id" element={<ProductDetails />} />
           </Routes>
         </Router>
