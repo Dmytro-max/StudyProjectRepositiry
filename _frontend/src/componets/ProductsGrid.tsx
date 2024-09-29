@@ -14,11 +14,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
   const productClickHandler = (id: string) => {
     navigate(`/product/${id}`);
   };
-  useEffect(() => {
-    console.log(products);
-    debugger
-  }, []);
-
   return (
     <Grid container spacing={2} justifyContent="center">
       {products.length > 0 &&
