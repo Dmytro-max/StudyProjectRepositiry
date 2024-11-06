@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Grid } from "@mui/material"; // Import Grid from MUI
 import ProductCard from "./ProductCard"; // Import your ProductCard component
 import { useNavigate } from "react-router-dom";
-import { Product } from "../api/models/Product";
+import { Product } from "../../api/models/Product";
 
 // Props for the ProductGrid component
 interface ProductGridProps {
@@ -15,7 +15,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
     navigate(`/product/${id}`);
   };
   return (
-    <Grid container spacing={2} justifyContent="center">
+    <Grid container spacing={2} justifyContent="center" marginLeft={0.25}>
       {products.length > 0 &&
         products.map((product) => (
           <Grid

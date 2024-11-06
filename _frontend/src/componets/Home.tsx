@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import ProductGrid from "./ProductsGrid";
+import { useEffect, useState } from "react";
+import ProductGrid from "./Product/ProductsGrid";
 import { Product, ProductsService } from "../api";
 
 const Home = () => {

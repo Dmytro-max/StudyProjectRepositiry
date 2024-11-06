@@ -8,7 +8,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { CreateProductDto } from "../api";
+import { CreateProductDto } from "./api";
 
 const AddProductForm: React.FC = () => {
   // Form state
@@ -45,13 +45,17 @@ const AddProductForm: React.FC = () => {
   // Mock submit handler
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (product.price < 0) {
+      alert("Price cannot be negative");
+      return;
+    }
     console.log("Product to submit: ", product);
     // Mock submit logic for now
     alert("Product added (mock): " + JSON.stringify(product, null, 2));
   };
 
   return (
-    <Container maxWidth="sm" sx={{ mt: 4 }}>
+    <Container maxWidth="sm" sx={{ mt: 3, maxHeight: "100%" }}>
       <Typography variant="h4" gutterBottom>
         Add New Product
       </Typography>
@@ -86,8 +90,15 @@ const AddProductForm: React.FC = () => {
           fullWidth
           margin="normal"
           multiline
-          rows={4}
+          rows={8}
           required
+          sx={{
+            maxHeight: "100%",
+            fontSize: "16px",
+            lineHeight: "16px",
+            overflow: "hidden",
+            height: "fit-content",
+          }}
         />
 
         <FormControlLabel

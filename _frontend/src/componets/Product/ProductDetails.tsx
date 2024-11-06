@@ -1,8 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Typography, Button, Container } from "@mui/material";
-import { Product } from "../api/models/Product";
-import { ProductsService } from "../api";
+import {
+  Typography,
+  Button,
+  Container,
+  Stack,
+  Divider,
+  Box,
+} from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { Product } from "../../api/models/Product";
+import { ProductsService } from "../../api";
 
 interface ProductDetailProps {
   // Optionally define a prop type if you're passing props
@@ -40,40 +48,69 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
       </>
     );
   }
-  
+
   return (
     <Container
       sx={{
-        paddingTop: 4, // Add padding from the top
+        paddingTop: 6, // Add padding from the top
         paddingBottom: 4,
         minHeight: "100vh", // Full height of the viewport
-        display: "flex",
+        display: "grid",
+        gridTemplateColumns: "3fr 1fr",
+        gap: 4, // Space between grid items
         flexDirection: "column",
-        alignItems: "center",
+        // alignItems: "center",
+        flexFlow: "row",
       }}
     >
-      <Typography variant="h3" component="h1" gutterBottom>
-        {product.name}
-      </Typography>
-      <img
-        src={img}
-        alt={product.name}
-        style={{
-          width: "100%",
-          maxHeight: "400px",
-          objectFit: "cover",
-          borderRadius: "8px",
-        }} // Adjust image styling
-      />
-      <Typography variant="h6" color="textSecondary" sx={{ marginY: 2 }}>
-        ${product.price}
-      </Typography>
-      <Typography variant="body1" paragraph sx={{ textAlign: "center" }}>
-        {product.description}
-      </Typography>
-      <Button variant="contained" color="primary" sx={{ marginTop: 2 }}>
-        Add to Cart
-      </Button>
+      <Box className="product-info-bar">
+        <Typography variant="h4" component="h1" gutterBottom>
+          {product.name}
+        </Typography>
+
+        <img
+          src={img}
+          alt={product.name}
+          style={{
+            // width: "100%",
+            // maxHeight: "400px",
+            minWidth: "300px",
+            objectFit: "cover",
+            borderRadius: "8px",
+          }} // Adjust image styling
+        />
+
+        <Typography variant="h4" paragraph sx={{ textAlign: "left" }}>
+          Опис
+        </Typography>
+        <Typography variant="body1" paragraph sx={{ textAlign: "left" }}>
+          {product.description}
+        </Typography>
+      </Box>
+      <Stack
+        className="product-specifications-bar"
+        sx={{}}
+        divider={<Divider orientation="horizontal" />}
+      >
+        <Typography variant="h5" color="textPrimary" sx={{ marginY: 2 }}>
+          Характеристики:
+        </Typography>
+        <Typography variant="h6" color="textSecondary" sx={{ marginY: 2 }}>
+          Ціна: {product.price}₴
+        </Typography>
+        <Typography variant="h6" color="textSecondary" sx={{ marginY: 2 }}>
+          {product.available ? "Aveilable" : "Unavailable"}
+        </Typography>
+
+        <Button
+          aria-label=""
+          variant="contained"
+          color="primary"
+          sx={{ marginTop: 2, justifyContent: "space-between", width: "90%" }}
+        >
+          Add to Cart <AddShoppingCartIcon />
+        </Button>
+      </Stack>
     </Container>
   );
 };
