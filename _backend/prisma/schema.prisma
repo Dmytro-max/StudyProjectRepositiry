@@ -22,3 +22,15 @@ model Product {
   description String?
   available Boolean  @default(true)
 }
+
+model User {
+  id        String   @id @default(uuid()) 
+  firstName      String
+  lastName String
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  email String @unique
+  hash String
+  hashRt String?
+}

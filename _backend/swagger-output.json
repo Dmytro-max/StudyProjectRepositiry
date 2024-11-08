@@ -156,6 +156,96 @@
           "Products"
         ]
       }
+    },
+    "/auth/local/signup": {
+      "post": {
+        "operationId": "AuthController_localSignup",
+        "summary": "Sign up a new user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully signed up"
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/local/signin": {
+      "post": {
+        "operationId": "AuthController_localSignin",
+        "summary": "Sign in an existing user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully signed in"
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/local/refresh": {
+      "post": {
+        "operationId": "AuthController_refreshTokens",
+        "summary": "Refresh access and refresh tokens",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Tokens successfully refreshed"
+          }
+        },
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/auth/local/logout": {
+      "post": {
+        "operationId": "AuthController_localLogout",
+        "summary": "Log out the current user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User successfully logged out"
+          }
+        },
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
     }
   },
   "info": {
@@ -247,6 +337,56 @@
       "UpdateProductDto": {
         "type": "object",
         "properties": {}
+      },
+      "SignUpDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email address",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "strongPassword123"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "first name, 4-32 chars length",
+            "example": "Jhon"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name, 4-32 chars length",
+            "example": "Smith"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "SignInDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email address",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "strongPassword123"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
       }
     }
   }
