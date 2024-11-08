@@ -52,3 +52,9 @@ npm run dev
 
 # Термінал виведе посилання на розгорнутий фронтенд.
 ```
+
+ ## Run migrations: 
+ ```bash  
+    npx prisma migrate dev
+ ```
+

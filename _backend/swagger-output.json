@@ -156,6 +156,117 @@
           "Products"
         ]
       }
+    },
+    "/auth/local/signup": {
+      "post": {
+        "operationId": "AuthController_localSignup",
+        "summary": "Sign up a new user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully signed up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/local/signin": {
+      "post": {
+        "operationId": "AuthController_localSignin",
+        "summary": "Sign in an existing user",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignInDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/local/refresh": {
+      "post": {
+        "operationId": "AuthController_refreshTokens",
+        "summary": "Refresh access and refresh tokens",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Tokens successfully refreshed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/auth/local/logout": {
+      "post": {
+        "operationId": "AuthController_localLogout",
+        "summary": "Log out the current user",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "User successfully logged out"
+          }
+        },
+        "tags": [
+          "Auth"
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
     }
   },
   "info": {
@@ -247,6 +358,116 @@
       "UpdateProductDto": {
         "type": "object",
         "properties": {}
+      },
+      "SignUpDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email address",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "strongPassword123"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "first name, 4-32 chars length",
+            "example": "Jhon"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name, 4-32 chars length",
+            "example": "Smith"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "firstName",
+          "lastName"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "User creation date"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "User update date"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email address"
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "createdAt",
+          "updatedAt",
+          "email"
+        ]
+      },
+      "AuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "tokens": {
+            "type": "object",
+            "description": "accessToken and refreshToken"
+          },
+          "user": {
+            "description": "User details excluding sensitive data like hash",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          }
+        },
+        "required": [
+          "tokens",
+          "user"
+        ]
+      },
+      "SignInDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User email address",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User password",
+            "example": "strongPassword123"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
       }
     }
   }
