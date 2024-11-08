@@ -1,10 +1,11 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { DatabaseService } from 'src/database/database.service';
-import { SignUpDto } from './dto';
+import { AuthResponseDto, SignUpDto } from './dto';
 import * as bcrypt from 'bcrypt'
 import { Tokens } from './types';
 import { JwtService } from '@nestjs/jwt';
 import { SignInDto } from './dto/signin.dto';
+import { User as PrismaUser } from "@prisma/client";
 
 @Injectable()
 export class AuthService {
@@ -13,7 +14,7 @@ export class AuthService {
 
     }
 
-    async localSignup(signupDto: SignUpDto): Promise<Tokens> {
+    async localSignup(signupDto: SignUpDto): Promise<AuthResponseDto> {
         const hash = await this.hashData(signupDto.password)
         const newUser = await this.dbService.user.create({
             data: {
@@ -26,9 +27,10 @@ export class AuthService {
 
         const tokens = await this.getTokens(newUser.id, newUser.email);
         this.updateRtHash(newUser.id, tokens.refreshToken)
-        return tokens;
+
+        return this.transformToAuthResponse(tokens, newUser)
     }
-    async localSignin(signInDto: SignInDto): Promise<Tokens> {
+    async localSignin(signInDto: SignInDto): Promise<AuthResponseDto> {
         const user = await this.dbService.user.findUnique({
             where: {
                 email: signInDto.email
@@ -45,10 +47,11 @@ export class AuthService {
         }
         const tokens = await this.getTokens(user.id, user.email);
         this.updateRtHash(user.id, tokens.refreshToken)
-        return tokens;
+
+        return this.transformToAuthResponse(tokens, user)
     }
 
-    async refreshTokens(userId: string, rt: string): Promise<Tokens> {
+    async refreshTokens(userId: string, rt: string): Promise<AuthResponseDto> {
         const user = await this.dbService.user.findUnique({
             where: {
                 id: userId
@@ -67,9 +70,9 @@ export class AuthService {
 
         const tokens = await this.getTokens(user.id, user.email);
         this.updateRtHash(user.id, tokens.refreshToken)
-        return tokens;
+        return this.transformToAuthResponse(tokens, user)
     }
-    
+
     async localLogout(userId: string) {
         await this.dbService.user.updateMany({
             where: {
@@ -129,5 +132,12 @@ export class AuthService {
             accessToken: at,
             refreshToken: rt
         };
+    }
+    private transformToAuthResponse(tokens: Tokens, user: PrismaUser): AuthResponseDto {
+        const { hash, hashRt, ...publicFields } = user;
+        return {
+            user: { ...publicFields },
+            tokens
+        }
     }
 }

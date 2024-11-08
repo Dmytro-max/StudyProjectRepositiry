@@ -1,7 +1,9 @@
 import { User as PrismaUser } from "@prisma/client";
 import { ApiProperty } from '@nestjs/swagger';
+import { Tokens } from "../types";
+import { AuthResponseDto } from "../dto";
 
-export class User implements PrismaUser {
+export class User {
     @ApiProperty({ description: 'User ID' })
     id: string;
 
@@ -19,10 +21,4 @@ export class User implements PrismaUser {
 
     @ApiProperty({ description: 'User email address' })
     email: string;
-
-    @ApiProperty({ description: 'Password hash', example: 'hashed_password_example' })
-    hash: string;
-
-    @ApiProperty({ description: 'Refresh token hash', example: 'hashed_refresh_token_example' })
-    hashRt: string;
 }

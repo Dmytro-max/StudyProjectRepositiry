@@ -174,7 +174,14 @@
         },
         "responses": {
           "201": {
-            "description": "User successfully signed up"
+            "description": "User successfully signed up",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -199,7 +206,14 @@
         },
         "responses": {
           "200": {
-            "description": "User successfully signed in"
+            "description": "User successfully signed in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -214,7 +228,14 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Tokens successfully refreshed"
+            "description": "Tokens successfully refreshed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -367,6 +388,66 @@
           "password",
           "firstName",
           "lastName"
+        ]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User ID"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "First name"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "Last name"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "User creation date"
+          },
+          "updatedAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "User update date"
+          },
+          "email": {
+            "type": "string",
+            "description": "User email address"
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "createdAt",
+          "updatedAt",
+          "email"
+        ]
+      },
+      "AuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "tokens": {
+            "type": "object",
+            "description": "accessToken and refreshToken"
+          },
+          "user": {
+            "description": "User details excluding sensitive data like hash",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/User"
+              }
+            ]
+          }
+        },
+        "required": [
+          "tokens",
+          "user"
         ]
       },
       "SignInDto": {

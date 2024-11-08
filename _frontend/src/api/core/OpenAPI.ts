@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ApiRequestOptions } from './ApiRequestOptions';
+import type {ApiRequestOptions} from './ApiRequestOptions';
 
 type Resolver<T> = (options: ApiRequestOptions) => Promise<T>;
 type Headers = Record<string, string>;
@@ -22,11 +22,23 @@ export type OpenAPIConfig = {
 export const OpenAPI: OpenAPIConfig = {
     BASE: 'http://localhost:3000',
     VERSION: '1.0',
-    WITH_CREDENTIALS: false,
+    WITH_CREDENTIALS: true,
     CREDENTIALS: 'include',
-    TOKEN: undefined,
-    USERNAME: undefined,
-    PASSWORD: undefined,
-    HEADERS: undefined,
-    ENCODE_PATH: undefined,
+    TOKEN: async () => {
+        const token = localStorage.getItem('token');
+        return token || ''; // Better to return '' than null to keep the flow simple.
+    },
+    HEADERS: async () => {
+        const token = await OpenAPI.TOKEN();
+        const headers: Headers = {
+            'Content-Type': 'application/json',
+        };
+
+        // If a token exists, add Authorization header
+        if (token) {
+            headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        return headers;
+    },
 };
