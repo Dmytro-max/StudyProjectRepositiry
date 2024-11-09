@@ -13,7 +13,6 @@ import {Context} from "./main.tsx";
 
 function App() {
     const [isActive, setActive] = useState(false);
-    const [isLoginOpen, setLoginOpen] = useState(false);
     const {store} = useContext(Context)
     useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -25,7 +24,7 @@ function App() {
 
     return (
         <Router>
-            <Header MenuToggleActive={MenuToggleActive} OpenLoginWindow={setLoginOpen}/>
+            <Header MenuToggleActive={MenuToggleActive}/>
             <Box sx={{display: "flex", height: "100vh"}}>
                 {isActive && (
                     <Box

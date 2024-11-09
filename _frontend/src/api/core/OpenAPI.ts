@@ -31,7 +31,7 @@ export const OpenAPI: OpenAPIConfig = {
     HEADERS: async () => {
         const token = await OpenAPI.TOKEN();
         const headers: Headers = {
-            'Content-Type': 'application/json',
+            //'Content-Type': 'application/json',
         };
 
         // If a token exists, add Authorization header

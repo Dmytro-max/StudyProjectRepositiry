@@ -35,4 +35,12 @@ export class CreateProductDto implements Prisma.ProductCreateInput {
     @IsOptional()
     @IsBoolean()
     available?: boolean;
+
+    @ApiProperty({
+        description: 'Optional cover image file for the product',
+        type: 'string',
+        format: 'binary',
+        required: false,
+    })
+    cover?: Express.Multer.File;
 }

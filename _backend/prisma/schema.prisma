@@ -19,8 +19,9 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   price     Float
-  description String?
   available Boolean  @default(true)
+  description String?
+  coverImageUrl String?
 }
 
 model User {

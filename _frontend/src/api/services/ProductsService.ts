@@ -11,18 +11,18 @@ import { request as __request } from '../core/request';
 export class ProductsService {
     /**
      * Create new product
-     * @param requestBody
+     * @param formData
      * @returns Product The product has been successfully created.
      * @throws ApiError
      */
     public static productControllerCreate(
-        requestBody: CreateProductDto,
+        formData: CreateProductDto,
     ): CancelablePromise<Product> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/products',
-            body: requestBody,
-            mediaType: 'application/json',
+            formData: formData,
+            mediaType: 'multipart/form-data',
             errors: {
                 400: `Bad Request.`,
             },

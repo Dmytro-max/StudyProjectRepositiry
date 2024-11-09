@@ -31,5 +31,9 @@ export type Product = {
      * Indicates whether the product is available for purchase
      */
     available: boolean;
+    /**
+     * Cover image url
+     */
+    coverImageUrl: string;
 };
 
