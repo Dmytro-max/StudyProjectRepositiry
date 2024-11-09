@@ -13,6 +13,22 @@ services:
     volumes:
       - pgdata2:/var/lib/postgresql/data # Updated to use a defined volume
 
+  minio:
+    image: minio/minio
+    container_name: pharmacy_minio
+    restart: always
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001" # MinIO port
+    volumes:
+      - minio_data:/data # Define a volume for MinIO data
+    command: server /data --console-address :9001
+
 volumes:
-  pgdata2: # Declare the pgdata2 volume here
-    driver: local # Use the local driver for storing data
+  pgdata2:
+    driver: local
+  minio_data:
+    driver: local # Use local volume for MinIO data storage

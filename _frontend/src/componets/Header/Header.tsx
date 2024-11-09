@@ -1,19 +1,18 @@
-import React, { useContext } from "react";
-import { AppBar, Toolbar, IconButton, Typography, Button } from "@mui/material";
+import React, {useContext} from "react";
+import {AppBar, Toolbar, IconButton, Typography, Button} from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Search from "./Search";
-import { useNavigate } from "react-router-dom";
-import { Context } from "../../main.tsx";
-import { observer } from "mobx-react-lite";
+import {useNavigate} from "react-router-dom";
+import {Context} from "../../main.tsx";
+import {observer} from "mobx-react-lite";
 
 interface HeaderProps {
     MenuToggleActive: () => void;
-    OpenLoginWindow: (open: boolean) => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ MenuToggleActive, OpenLoginWindow }) => {
+const Header: React.FC<HeaderProps> = ({MenuToggleActive}) => {
     const navigate = useNavigate();
-    const { store } = useContext(Context);
+    const {store} = useContext(Context);
 
     const mainClickHandler = () => {
         navigate(`/`);
@@ -36,32 +35,32 @@ const Header: React.FC<HeaderProps> = ({ MenuToggleActive, OpenLoginWindow }) =>
                     color="inherit"
                     aria-label="menu"
                     onClick={MenuToggleActive}
-                    sx={{ mr: 2 }}
+                    sx={{mr: 2}}
                 >
-                    <MenuIcon />
+                    <MenuIcon/>
                 </IconButton>
                 <Typography
                     variant="h6"
                     component="a"
-                    sx={{ flexGrow: 1, textDecoration: "none" }}
+                    sx={{flexGrow: 1, textDecoration: "none"}}
                     href=""
                     color="white"
                     onClick={mainClickHandler}
                 >
                     Pharmall
                 </Typography>
-                <Search />
+                <Search/>
                 {store.isAuth ? (
                     <>
-                        <Typography color="inherit" sx={{ ml: 2 }}>
+                        <Typography color="inherit" sx={{ml: 2}}>
                             {store.user.email}
                         </Typography>
-                        <Button color="inherit" onClick={handleLogout} sx={{ ml: 2 }}>
+                        <Button color="inherit" onClick={handleLogout} sx={{ml: 2}}>
                             Logout
                         </Button>
                     </>
                 ) : (
-                    <Button color="inherit" onClick={handleLoginClick} sx={{ ml: 2 }}>
+                    <Button color="inherit" onClick={handleLoginClick} sx={{ml: 2}}>
                         Login
                     </Button>
                 )}

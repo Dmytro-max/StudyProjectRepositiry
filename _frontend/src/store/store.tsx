@@ -1,4 +1,4 @@
-import {AuthService, User} from "../api";
+import {AuthService, CreateProductDto, ProductsService, User} from "../api";
 import {makeAutoObservable} from "mobx";
 import {fetchRefreshToken} from "./refreshTokenRequest.ts";
 
@@ -74,6 +74,19 @@ export default class Store {
             this.setUser(response.user);
         } catch (e) {
             console.error(e)
+        }
+    }
+
+    async addProduct(product: CreateProductDto) {
+        try {
+            this.setIsLoading(true);
+            console.log(product)
+            const response = await ProductsService.productControllerCreate(product);
+            return response;
+        } catch (e) {
+            console.error(e)
+        } finally {
+            this.setIsLoading(false)
         }
     }
 }

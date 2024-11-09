@@ -20,7 +20,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/CreateProductDto"
               }
@@ -303,6 +303,11 @@
             "type": "boolean",
             "description": "Indicates whether the product is available for purchase",
             "default": true
+          },
+          "cover": {
+            "type": "string",
+            "description": "Optional cover image file for the product",
+            "format": "binary"
           }
         },
         "required": [
@@ -343,6 +348,10 @@
             "type": "boolean",
             "description": "Indicates whether the product is available for purchase",
             "default": true
+          },
+          "coverImageUrl": {
+            "type": "string",
+            "description": "Cover image url"
           }
         },
         "required": [
@@ -352,7 +361,8 @@
           "updatedAt",
           "price",
           "description",
-          "available"
+          "available",
+          "coverImageUrl"
         ]
       },
       "UpdateProductDto": {

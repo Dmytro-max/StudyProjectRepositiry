@@ -1,10 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Prisma } from '@prisma/client';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Product } from './entities/product.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Products')
 @Controller('products')
@@ -15,8 +15,17 @@ export class ProductController {
   @ApiOperation({ summary: 'Create new product' })
   @ApiResponse({ status: 201, description: 'The product has been successfully created.', type: Product })
   @ApiResponse({ status: 400, description: 'Bad Request.' }) // You can specify more error responses if needed
-  create(@Body() createProductDto: CreateProductDto): Promise<Product> {
-    return this.productService.create(createProductDto);
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('cover'))
+  create(@Body() createProductDto: CreateProductDto,
+    @UploadedFile() cover: Express.Multer.File): Promise<Product> {
+    if (createProductDto.cover) {
+      cover = createProductDto.cover;
+      delete createProductDto.cover;
+    }
+    createProductDto.price = Number(createProductDto.price)
+    createProductDto.available = Boolean(createProductDto.available)
+    return this.productService.create(createProductDto, cover);
   }
 
   @Get()

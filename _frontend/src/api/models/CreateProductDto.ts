@@ -19,5 +19,9 @@ export type CreateProductDto = {
      * Indicates whether the product is available for purchase
      */
     available?: boolean;
+    /**
+     * Optional cover image file for the product
+     */
+    cover?: Blob;
 };
 

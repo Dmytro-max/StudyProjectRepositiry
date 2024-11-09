@@ -44,4 +44,10 @@ export class Product implements PrismaProduct {
         default: true,
     })
     available: boolean;
+
+    @ApiProperty({
+        description: 'Cover image url',
+        type: String,
+    })
+    coverImageUrl: string;
 }
