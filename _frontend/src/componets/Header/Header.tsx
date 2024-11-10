@@ -12,6 +12,7 @@ import Search from "./Search";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../main.tsx";
 import { observer } from "mobx-react-lite";
+import HomeIcon from "@mui/icons-material/Home";
 
 interface HeaderProps {
   MenuToggleActive: () => void;

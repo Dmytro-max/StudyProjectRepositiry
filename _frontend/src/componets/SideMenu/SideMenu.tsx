@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import HomeIcon from "@mui/icons-material/Home";
 
 import "./SideMenu.css";
 
@@ -18,16 +19,24 @@ export const SideMenu = () => {
       <Typography
         variant="h6"
         component="a"
-        sx={{ flexGrow: 1, textDecoration: "none" }}
+        className="menu-item"
+        sx={{
+          flexGrow: 0,
+          textDecoration: "none",
+          display: "flex",
+          alignItems: "center",
+        }}
         href=""
         color="white"
       >
         Home
+        <HomeIcon />
       </Typography>
       <Typography
         variant="h6"
         component="a"
-        sx={{ flexGrow: 1, textDecoration: "none" }}
+        className="menu-item"
+        sx={{ flexGrow: 0, textDecoration: "none" }}
         href=""
         color="white"
       >
@@ -36,7 +45,8 @@ export const SideMenu = () => {
       <Typography
         variant="h6"
         component="a"
-        sx={{ flexGrow: 1, textDecoration: "none" }}
+        className="menu-item"
+        sx={{ flexGrow: 0, textDecoration: "none" }}
         href=""
         color="white"
       >

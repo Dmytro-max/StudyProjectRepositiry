@@ -1,0 +1,28 @@
+.Login_Window{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    position: sticky;
+    align-items: center;
+    /* height: 100vh; */
+    min-height: 10rem;
+    min-width: 20rem;
+    margin: 1rem;
+    width: fit-content;
+    border-radius: 0.25rem;
+    margin: 0.325rem;
+    background-color: #16bce9;
+    font-size: large;
+    font-family: Roboto, 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+input{
+    font-size: large;
+    margin: 0.5rem;
+    border-radius: 0.25rem;
+    border: 0;
+}
+.submit{
+
+}
