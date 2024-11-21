@@ -99,7 +99,7 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
           Ціна: {product.price}₴
         </Typography>
         <Typography variant="h6" color="textSecondary" sx={{ marginY: 2 }}>
-          {product.available ? "Aveilable" : "Unavailable"}
+          {product.available ? "В наявності" : "Не в наявності"}
         </Typography>
 
         <Button

@@ -1,31 +1,52 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import ProductGrid from "./Product/ProductsGrid";
-import { Product, ProductsService } from "../api";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Context } from "../main";
+import { observer } from "mobx-react-lite";
+import { Typography, Box } from "@mui/material";
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 
 const Home = () => {
-  const [products, setProducts] = useState<Product[] | null>(null);
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const res = await ProductsService.productControllerFindAll();
-        setProducts(res);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      }
-    };
+  const { store } = useContext(Context);
 
-    fetchProducts(); // Call the async function
+  useEffect(() => {
+    store.getProducts();
   }, []);
 
   return (
     <>
-      {products && products.length > 0 ? (
-        <ProductGrid products={products}></ProductGrid>
+      {store.productsIsLoading ? (
+        <div
+          style={{ display: "flex", justifyContent: "center", padding: "20px" }}
+        >
+          <CircularProgress />
+        </div>
+      ) : store.filteredProducts.length > 0 ? (
+        <ProductGrid products={store.filteredProducts}></ProductGrid>
       ) : (
-        <h1>no products</h1>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+            color: "text.secondary",
+          }}
+        >
+          <SentimentDissatisfiedIcon
+            sx={{ fontSize: 60, mb: 2, color: "gray" }}
+          />
+          <Typography variant="h6" sx={{ mb: 1 }}>
+            No products found
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Try adjusting your filters or check back later.
+          </Typography>
+        </Box>
       )}
     </>
   );
 };
 
-export default Home;
+export default observer(Home);
