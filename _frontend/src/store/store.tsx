@@ -2,6 +2,7 @@ import {
   AuthService,
   CreateProductDto,
   Product,
+  ProductCategory,
   ProductsService,
   User,
 } from "../api";
@@ -15,6 +16,7 @@ export default class Store {
   productsIsLoading = false;
   products: Product[] = [];
   filteredProducts: Product[] = [];
+  productCategories: ProductCategory[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -40,6 +42,10 @@ export default class Store {
     this.products = [...products];
   }
 
+  setProductCategories(productCategories: ProductCategory[]) {
+    this.productCategories = [...productCategories];
+  }
+
   setFilteredProducts(products: Product[]) {
     this.filteredProducts = [...products];
   }
@@ -54,6 +60,19 @@ export default class Store {
       console.error(e);
     } finally {
       this.setProductsIsLoading(false);
+    }
+  }
+
+  async getProductCategories() {
+    try {
+      this.setIsLoading(true);
+      const res =
+        await ProductsService.productControllerFindAllProductCategories();
+      this.setProductCategories(res);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.setIsLoading(false);
     }
   }
 
@@ -135,5 +154,17 @@ export default class Store {
     } finally {
       this.setIsLoading(false);
     }
+  }
+
+  filterProductsByCategory(category: string) {
+    console.log(this.products);
+    const products = this.products.filter((p) => {
+      return p.category?.name === category;
+    });
+    this.setFilteredProducts(products);
+  }
+
+  clearCategoryFilter() {
+    this.setFilteredProducts(this.products);
   }
 }

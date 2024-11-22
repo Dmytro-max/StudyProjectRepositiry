@@ -13,7 +13,7 @@ import { Context } from "./main.tsx";
 import { Busket } from "./componets/Busket/Busket";
 
 function App() {
-  const [isActive, setActive] = useState(false);
+  const [isActive, setActive] = useState(true);
   const { store } = useContext(Context);
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -30,7 +30,7 @@ function App() {
         {isActive && (
           <Box
             sx={{
-              width: { xs: "100%", sm: "240px" },
+              width: { xs: "100%", sm: "300px" },
               transition: "width 250ms",
               borderRight: 1,
               borderColor: "divider",

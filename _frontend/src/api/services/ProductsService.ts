@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { CreateProductDto } from '../models/CreateProductDto';
 import type { Product } from '../models/Product';
+import type { ProductCategory } from '../models/ProductCategory';
 import type { UpdateProductDto } from '../models/UpdateProductDto';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
@@ -37,6 +38,17 @@ export class ProductsService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/products',
+        });
+    }
+    /**
+     * Retrieve all product categories
+     * @returns ProductCategory Successfully retrieved all product categories
+     * @throws ApiError
+     */
+    public static productControllerFindAllProductCategories(): CancelablePromise<Array<ProductCategory>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/products/categories',
         });
     }
     /**

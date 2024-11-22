@@ -3,12 +3,11 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Product } from "../../api";
 import pillsThumbnail from "../../assets/pillsThumbnail.svg";
 
 const thumbnail = pillsThumbnail;
+
 interface ProductProps extends Product {
   onClick: (id: string) => void;
 }
@@ -16,10 +15,10 @@ interface ProductProps extends Product {
 const ProductCard: React.FC<ProductProps> = ({
   id,
   name,
-  price,
-  // description,
-  available,
   coverImageUrl,
+  tradeMark,
+  category,
+  quantityInPackage,
   onClick,
 }) => {
   return (
@@ -40,26 +39,52 @@ const ProductCard: React.FC<ProductProps> = ({
         height="140"
         image={coverImageUrl ? coverImageUrl : thumbnail}
         alt={name}
-        sx={{ minWidth: "" }}
       />
-      <CardContent sx={{ justifyItems: "end" }}>
-        <Typography gutterBottom variant="h5" component="div">
+      <CardContent
+        sx={{ justifyItems: "end", display: "flex", flexDirection: "column" }}
+      >
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          sx={{ fontWeight: "bold" }} // Make product name bold
+        >
           {name}
         </Typography>
-        <Typography variant="h6">
-          {available ? "Available" : "Unavailable"}
+        {/* Display the tradeMark */}
+        {tradeMark && (
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{ marginBottom: 1 }}
+          >
+            Торгова марка: {tradeMark}
+          </Typography>
+        )}
+        {/* Display the category name */}
+        {category?.name && (
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{ marginBottom: 1 }}
+          >
+            Категорія: {category.name}
+          </Typography>
+        )}
+        {/* Display the quantity in package */}
+        {quantityInPackage && (
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            sx={{ marginBottom: 1 }}
+          >
+            Кількість в упаковці: {quantityInPackage}
+          </Typography>
+        )}
+        {/* Placeholder for price range, bolded */}
+        <Typography variant="h6" sx={{ fontWeight: "bold", marginTop: "auto" }}>
+          12.50₴ - 44.20₴
         </Typography>
-        <Typography variant="h6">{price.toFixed(2)}₴</Typography>
-
-        <Button
-          variant="contained"
-          color="primary" // Set to a valid color
-          disabled={!available} // Disable button if not available
-          sx={{ marginTop: 2, display: "inline-flex", minWidth: 0 }}
-        >
-          {available ? "Add to Cart  " : "Out of Stock  "}
-          <AddShoppingCartIcon />
-        </Button>
       </CardContent>
     </Card>
   );

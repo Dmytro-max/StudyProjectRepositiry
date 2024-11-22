@@ -5,6 +5,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { ApiConsumes, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Product } from './entities/product.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { ProductCategory } from './entities/product-category.entity';
 
 @ApiTags('Products')
 @Controller('products')
@@ -23,8 +24,6 @@ export class ProductController {
       cover = createProductDto.cover;
       delete createProductDto.cover;
     }
-    createProductDto.price = Number(createProductDto.price)
-    createProductDto.available = Boolean(createProductDto.available)
     return this.productService.create(createProductDto, cover);
   }
 
@@ -37,6 +36,17 @@ export class ProductController {
   })
   findAll(): Promise<Product[]> {
     return this.productService.findAll();
+  }
+
+  @Get('categories')
+  @ApiOperation({ summary: 'Retrieve all product categories' })
+  @ApiResponse({
+    status: 200,
+    description: 'Successfully retrieved all product categories',
+    type: [ProductCategory],
+  })
+  findAllProductCategories(): Promise<ProductCategory[]> {
+    return this.productService.findAllProductCategories();
   }
 
   @Get(':id')

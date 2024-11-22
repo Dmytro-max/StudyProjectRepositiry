@@ -96,10 +96,10 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
           Характеристики:
         </Typography>
         <Typography variant="h6" color="textSecondary" sx={{ marginY: 2 }}>
-          Ціна: {product.price}₴
+          Ціна: {411}₴
         </Typography>
         <Typography variant="h6" color="textSecondary" sx={{ marginY: 2 }}>
-          {product.available ? "В наявності" : "Не в наявності"}
+          {true ? "В наявності" : "Не в наявності"}
         </Typography>
 
         <Button

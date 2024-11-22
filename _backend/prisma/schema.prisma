@@ -14,14 +14,30 @@ datasource db {
 }
 
 model Product {
-  id        String   @id @default(uuid()) 
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  price     Float
-  available Boolean  @default(true)
+  id                String          @id @default(uuid())
+  name              String
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  description       String?
+  coverImageUrl     String?
+  tradeMark         String?
+  quantityInPackage String?
+  termsOfSale       String?
+  countryOfOrigin   String?
+  releaseForm       String?
+
+  categoryId        String
+  category          ProductCategory? @relation(fields: [categoryId], references: [id])
+}
+
+model ProductCategory {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
   description String?
-  coverImageUrl String?
+
+  products    Product[]
 }
 
 model User {

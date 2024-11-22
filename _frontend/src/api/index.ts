@@ -6,6 +6,7 @@
 export type { AuthResponseDto } from './models/AuthResponseDto';
 export type { CreateProductDto } from './models/CreateProductDto';
 export type { Product } from './models/Product';
+export type { ProductCategory } from './models/ProductCategory';
 export type { SignInDto } from './models/SignInDto';
 export type { SignUpDto } from './models/SignUpDto';
 export type { UpdateProductDto } from './models/UpdateProductDto';

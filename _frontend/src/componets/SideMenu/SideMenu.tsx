@@ -1,68 +1,129 @@
-import { Typography } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import HomeIcon from "@mui/icons-material/Home";
+import React, { useContext, useState } from "react";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Box,
+  Divider,
+  Typography,
+  Button,
+} from "@mui/material";
+import { Context } from "../../main.tsx";
 
-import "./SideMenu.css";
-import { useNavigate } from "react-router-dom";
+// Define a mapping of category names to icon file paths
+const categoryIcons: { [key: string]: string } = {
+  "Ліки та профілактичні засоби": "category1.png",
+  "Вітаміни та мінерали": "category2.png",
+  "Краса та догляд": "category3.png",
+  "Спорт та здоров'я": "category4.png",
+  "Товари для дітей та мам": "category5.png",
+  "Вироби медичного призначення": "category6.png",
+  "Ортопедія та реабілітація": "category7.png",
+  "Медична техніка": "category8.png",
+  "Зоотовари": "category9.png",
+};
 
-export const SideMenu = () => {
-  const navigate = useNavigate();
+const categories = Object.keys(categoryIcons); // Using keys of the categoryIcons as categories
 
-  const mainClickHandler = () => {
-    navigate(`/`);
+export const SideMenu: React.FC = () => {
+  const { store } = useContext(Context);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
+  // Handle category click
+  const handleCategoryClick = (category: string) => {
+    setActiveCategory(category); // Set active category in state
+    store.filterProductsByCategory(category); // Call store method to filter products
   };
 
-  const buscketClickHandler = () => {
-    navigate(`/busket`);
+  // Clear category selection
+  const handleClearCategory = () => {
+    setActiveCategory(null); // Reset active category
+    store.clearCategoryFilter(); // Call store method to clear product filter
   };
 
   return (
-    <div
-      className={"side-menu"}
-      style={{
-        minWidth: 0,
-        // width: isActive ? "200px" : "0px",
-        // transition: "50ms",
+    <Box
+      sx={{
+        overflowY: "auto",
+        height: "100%",
+        boxShadow: "4px 0 10px rgba(25, 118, 210, 0.3)", // Blue shadow with slight transparency
+        borderRadius: 2, // Optional: rounded corners
+        paddingTop: 4, // Adds padding from top to separate from the header
+        paddingX: 2, // Add horizontal padding to avoid touching sides
+        position: "sticky", // Keeps the side menu fixed in place
+        top: 0, // Fixes the top position of the side menu
       }}
     >
-      <Typography
-        variant="h6"
-        component="a"
-        className="menu-item"
-        sx={{
-          flexGrow: 0,
-          textDecoration: "none",
-          display: "flex",
-          alignItems: "center",
-        }}
-        href=""
-        color="white"
-        onClick={mainClickHandler}
-      >
-        Home
-        <HomeIcon />
-      </Typography>
-      <Typography
-        variant="h6"
-        component="a"
-        className="menu-item"
-        sx={{ flexGrow: 0, textDecoration: "none" }}
-        href=""
-        color="white"
-      >
-        Categories
-      </Typography>
-      <Typography
-        variant="h6"
-        component="a"
-        className="menu-item"
-        sx={{ flexGrow: 0, textDecoration: "none" }}
-        href=""
-        color="white"
-        onClick={buscketClickHandler}
-      >
-        Busket <AddShoppingCartIcon />
-      </Typography>
-    </div>
+      {/* Active Category Display */}
+      <Box sx={{ marginBottom: 2 }}>
+        <Typography
+          variant="h6"
+          sx={{ color: "primary.main", fontWeight: "bold" }}
+        >
+          {activeCategory
+            ? `Активна категорія: ${activeCategory}`
+            : "Виберіть категорію"}
+        </Typography>
+        {activeCategory && (
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleClearCategory}
+            sx={{ marginTop: 1 }}
+          >
+            Очистити вибір
+          </Button>
+        )}
+      </Box>
+
+      {/* Categories List */}
+      <List>
+        {categories.map((category, index) => (
+          <div key={index}>
+            <ListItem
+              button
+              onClick={() => handleCategoryClick(category)}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer", // Make the item clickable
+                paddingY: 1, // Vertical padding for each item
+                backgroundColor:
+                  activeCategory === category
+                    ? "rgba(25, 118, 210, 0.1)"
+                    : "transparent", // Highlight active category
+                "&:hover": {
+                  backgroundColor:
+                    activeCategory === category
+                      ? "rgba(25, 118, 210, 0.2)"
+                      : "rgba(25, 118, 210, 0.1)", // Lighter blue for hover
+                },
+              }}
+              component="li" // Ensure ListItem renders as a list item
+            >
+              <img
+                src={`src/assets/categories-icons/${categoryIcons[category]}`} // Dynamically load the icon
+                alt={category}
+                style={{
+                  width: 32, // Bigger icon size
+                  height: 32,
+                  marginRight: 16, // Add spacing between icon and text
+                }}
+              />
+              <ListItemText
+                primary={category}
+                sx={{
+                  color: "text.primary",
+                  fontWeight: "bold", // Make text bold
+                  fontSize: "1.1rem", // Increase text size
+                }}
+              />
+            </ListItem>
+            {index < categories.length - 1 && <Divider />}{" "}
+            {/* Divider between items */}
+          </div>
+        ))}
+      </List>
+    </Box>
   );
 };

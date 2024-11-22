@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { ProductCategory } from './ProductCategory';
 export type Product = {
     /**
      * The unique identifier for the product
@@ -20,20 +21,40 @@ export type Product = {
      */
     updatedAt: string;
     /**
-     * The price of the product
-     */
-    price: number;
-    /**
      * A brief description of the product
      */
-    description: string;
+    description: string | null;
     /**
-     * Indicates whether the product is available for purchase
+     * Cover image URL of the product
      */
-    available: boolean;
+    coverImageUrl: string | null;
     /**
-     * Cover image url
+     * The trade mark of the product
      */
-    coverImageUrl: string;
+    tradeMark: string | null;
+    /**
+     * The quantity of the product in a package
+     */
+    quantityInPackage: string | null;
+    /**
+     * The terms of sale for the product
+     */
+    termsOfSale: string | null;
+    /**
+     * The country where the product originated
+     */
+    countryOfOrigin: string | null;
+    /**
+     * The release form of the product
+     */
+    releaseForm: string | null;
+    /**
+     * The ID of the category the product belongs to
+     */
+    categoryId: string;
+    /**
+     * The category the product belongs to
+     */
+    category: ProductCategory | null;
 };
 

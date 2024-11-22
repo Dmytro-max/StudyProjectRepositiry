@@ -8,20 +8,36 @@ export type CreateProductDto = {
      */
     name: string;
     /**
-     * The price of the product
-     */
-    price: number;
-    /**
      * A brief description of the product
      */
     description?: string;
     /**
-     * Indicates whether the product is available for purchase
-     */
-    available?: boolean;
-    /**
      * Optional cover image file for the product
      */
     cover?: Blob;
+    /**
+     * The trademark of the product
+     */
+    tradeMark?: string;
+    /**
+     * The quantity of products in a package
+     */
+    quantityInPackage?: string;
+    /**
+     * The terms of sale for the product
+     */
+    termsOfSale?: string;
+    /**
+     * The country of origin of the product
+     */
+    countryOfOrigin?: string;
+    /**
+     * The release form of the product (e.g., tablet, liquid)
+     */
+    releaseForm?: string;
+    /**
+     * The ID of the category the product belongs to
+     */
+    categoryId: string;
 };
 

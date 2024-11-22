@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Prisma, Product as PrismaProduct } from "@prisma/client";
+import { ProductCategory } from "./product-category.entity";
 
 export class Product implements PrismaProduct {
     @ApiProperty({
@@ -27,27 +28,64 @@ export class Product implements PrismaProduct {
     updatedAt: Date;
 
     @ApiProperty({
-        description: 'The price of the product',
-        type: Number,
-    })
-    price: number;
-
-    @ApiProperty({
         description: 'A brief description of the product',
         type: String,
+        nullable: true,
     })
     description: string;
 
     @ApiProperty({
-        description: 'Indicates whether the product is available for purchase',
-        type: Boolean,
-        default: true,
-    })
-    available: boolean;
-
-    @ApiProperty({
-        description: 'Cover image url',
+        description: 'Cover image URL of the product',
         type: String,
+        nullable: true,
     })
     coverImageUrl: string;
+
+    @ApiProperty({
+        description: 'The trade mark of the product',
+        type: String,
+        nullable: true,
+    })
+    tradeMark: string;
+
+    @ApiProperty({
+        description: 'The quantity of the product in a package',
+        type: String,
+        nullable: true,
+    })
+    quantityInPackage: string;
+
+    @ApiProperty({
+        description: 'The terms of sale for the product',
+        type: String,
+        nullable: true,
+    })
+    termsOfSale: string;
+
+    @ApiProperty({
+        description: 'The country where the product originated',
+        type: String,
+        nullable: true,
+    })
+    countryOfOrigin: string;
+
+    @ApiProperty({
+        description: 'The release form of the product',
+        type: String,
+        nullable: true,
+    })
+    releaseForm: string;
+
+    @ApiProperty({
+        description: 'The ID of the category the product belongs to',
+        type: String,
+    })
+    categoryId: string;
+
+    @ApiProperty({
+        description: 'The category the product belongs to',
+        type: ProductCategory, // Refer to the ProductCategory model
+        nullable: true,
+    })
+    category?: ProductCategory;
 }

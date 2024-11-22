@@ -1,144 +1,206 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
-    TextField,
-    Button,
-    Container,
-    Checkbox,
-    FormControlLabel,
-    Typography,
-    Box,
+  TextField,
+  Button,
+  Container,
+  Typography,
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Grid,
+  SelectChangeEvent,
 } from "@mui/material";
-import {CreateProductDto} from "./api";
-import {Context} from "./main.tsx";
-import {useNavigate} from "react-router-dom";
+import { CreateProductDto, ProductCategory } from "./api";
+import { Context } from "./main.tsx";
+import { useNavigate } from "react-router-dom";
+import { observer } from "mobx-react-lite";
 
 const AddProductForm: React.FC = () => {
-    // Form state
-    const [product, setProduct] = useState<CreateProductDto>({
-        name: "",
-        price: 0,
-        description: "",
-        available: true,
-    });
+  const [product, setProduct] = useState<CreateProductDto>({
+    name: "",
+    description: "",
+    tradeMark: "",
+    quantityInPackage: "",
+    termsOfSale: "",
+    countryOfOrigin: "",
+    releaseForm: "",
+    categoryId: "",
+  });
 
-    const [coverImage, setCoverImage] = useState<File | null>(null);
-    const {store} = useContext(Context)
-    const navigate = useNavigate()
+  const [coverImage, setCoverImage] = useState<File | null>(null);
+  const [categories, setCategories] = useState<ProductCategory[]>([]);
+  const { store } = useContext(Context);
+  const navigate = useNavigate();
 
-    // Handle form field changes
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value, type, checked} = e.target;
-        setProduct((prevProduct) => ({
-            ...prevProduct,
-            [name]: type === "checkbox" ? checked : value,
-        }));
+  // Mock categories or fetch from API
+  useEffect(() => {
+    const fetchCategories = async () => {
+      await store.getProductCategories(); // Assuming this fetches categories from an API
+      setCategories(store.productCategories); // Assuming store.productCategories has the fetched categories
     };
 
-    // Handle image file change
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            //   setProduct((prevProduct) => ({
-            //     ...prevProduct,
-            //     coverImage: e.target.files[0], // Set the selected image
-            //   }));
-            console.log(e.target.files[0]);
-            setCoverImage(e.target.files[0]);
-        }
-    };
+    fetchCategories(); // Call the async function
+  }, [store]);
+  // Handle form field changes
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      [name]: value,
+    }));
+  };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (product.price < 0) {
-            alert("Price cannot be negative");
-            return;
-        }
-        console.log("Product to submit: ", product);
-        if (coverImage) {
-            product.cover = coverImage;
-        }
-        const newProduct = await store.addProduct(product);
-        if (newProduct) {
-            navigate(`product/${newProduct.id}`);
-        }
-    };
+  // Handle dropdown change
+  const handleCategoryChange = (e: SelectChangeEvent<string>) => {
+    setProduct((prevProduct) => ({
+      ...prevProduct,
+      categoryId: e.target.value as string,
+    }));
+  };
 
-    return (
-        <Container maxWidth="sm" sx={{mt: 3, maxHeight: "100%"}}>
-            <Typography variant="h4" gutterBottom>
-                Add New Product
+  // Handle image file change
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setCoverImage(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Product to submit: ", product);
+    if (coverImage) {
+      product.cover = coverImage;
+    }
+    const newProduct = await store.addProduct(product);
+    if (newProduct) {
+      navigate(`product/${newProduct.id}`);
+    }
+  };
+
+  return (
+    <Container maxWidth="md" sx={{ mt: 3 }}>
+      <Typography variant="h4" gutterBottom>
+        Добавити новий товар
+      </Typography>
+
+      <form onSubmit={handleSubmit}>
+        <Grid container spacing={2}>
+          {/* Full Width Description */}
+          <Grid item xs={12}>
+            <TextField
+              label="Опис"
+              name="description"
+              value={product.description}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              multiline
+              rows={4}
+              required
+            />
+          </Grid>
+
+          {/* Column 1 */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Назва"
+              name="name"
+              value={product.name}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              required
+            />
+            <TextField
+              label="Торгова марка"
+              name="tradeMark"
+              value={product.tradeMark}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="Кількість в упаковці"
+              name="quantityInPackage"
+              value={product.quantityInPackage}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+
+          {/* Column 2 */}
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Країна виробник"
+              name="countryOfOrigin"
+              value={product.countryOfOrigin}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="Умови продажу"
+              name="termsOfSale"
+              value={product.termsOfSale}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              label="Форма випуску"
+              name="releaseForm"
+              value={product.releaseForm}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+            />
+          </Grid>
+
+          {/* Category Dropdown */}
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth margin="normal">
+              <InputLabel id="category-label">Категорія</InputLabel>
+              <Select
+                labelId="category-label"
+                value={product.categoryId}
+                onChange={handleCategoryChange}
+                required
+              >
+                {categories.map((category) => (
+                  <MenuItem key={category.id} value={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+
+        {/* Image Upload */}
+        <Box my={2}>
+          <Button variant="contained" component="label">
+            Завантажити знімок продукту
+            <input type="file" hidden onChange={handleImageChange} />
+          </Button>
+          {coverImage && (
+            <Typography variant="body2" color="textSecondary">
+              {coverImage.name}
             </Typography>
+          )}
+        </Box>
 
-            <form onSubmit={handleSubmit}>
-                <TextField
-                    label="Product Name"
-                    name="name"
-                    value={product.name}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-
-                <TextField
-                    label="Price"
-                    name="price"
-                    type="number"
-                    value={product.price}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    required
-                />
-
-                <TextField
-                    label="Description"
-                    name="description"
-                    value={product.description}
-                    onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    multiline
-                    rows={8}
-                    required
-                    sx={{
-                        maxHeight: "100%",
-                        fontSize: "16px",
-                        lineHeight: "16px",
-                        overflow: "hidden",
-                        height: "fit-content",
-                    }}
-                />
-
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            name="available"
-                            checked={product.available}
-                            onChange={handleChange}
-                        />
-                    }
-                    label="Available"
-                />
-
-                {/* Image upload mock */}
-                <Box my={2}>
-                    <Button variant="contained" component="label">
-                        Upload Cover Image
-                        <input type="file" hidden onChange={handleImageChange}/>
-                    </Button>
-                    {coverImage && (
-                        <Typography variant="body2" color="textSecondary">
-                            {coverImage.name}
-                        </Typography>
-                    )}
-                </Box>
-
-                <Button type="submit" variant="contained" color="primary" fullWidth>
-                    Add Product
-                </Button>
-            </form>
-        </Container>
-    );
+        {/* Submit Button */}
+        <Button type="submit" variant="contained" color="primary" fullWidth>
+          Зберегти
+        </Button>
+      </form>
+    </Container>
+  );
 };
 
-export default AddProductForm;
+export default observer(AddProductForm);
