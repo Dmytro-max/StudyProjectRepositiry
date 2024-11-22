@@ -48,14 +48,25 @@ export const ProductElement = ({ props }) => {
         <Stack
           direction="row"
           // className={classes.quantityBlock}
-          sx={{ display: "flex", alignItems: "center", minWidth: "5rem" }}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            minWidth: "2rem",
+            justifyContent: "space-around",
+            border: "0.05rem solid #000",
+            borderRadius: "0.5rem",
+          }}
         >
           <button className={classes.button}>-</button>
           <Typography
             component="a"
             id=""
             className={classes.quantity}
-            // style={{ fontSize: "1.5rem", height: "2rem" }}
+            style={{
+              fontSize: "1.35rem",
+              height: "2rem",
+              paddingTop: "0.2rem",
+            }}
           >
             {quantity}
           </Typography>
@@ -69,6 +80,7 @@ export const ProductElement = ({ props }) => {
           sx={{
             display: "flex",
             justifyContent: "center",
+            fontSize: "1.3rem",
           }}
         >
           {Price.toFixed(2)}

@@ -3,9 +3,18 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import HomeIcon from "@mui/icons-material/Home";
 
 import "./SideMenu.css";
+import { useNavigate } from "react-router-dom";
 
 export const SideMenu = () => {
-  // function ToggleMenu() {}
+  const navigate = useNavigate();
+
+  const mainClickHandler = () => {
+    navigate(`/`);
+  };
+
+  const buscketClickHandler = () => {
+    navigate(`/busket`);
+  };
 
   return (
     <div
@@ -28,6 +37,7 @@ export const SideMenu = () => {
         }}
         href=""
         color="white"
+        onClick={mainClickHandler}
       >
         Home
         <HomeIcon />
@@ -49,6 +59,7 @@ export const SideMenu = () => {
         sx={{ flexGrow: 0, textDecoration: "none" }}
         href=""
         color="white"
+        onClick={buscketClickHandler}
       >
         Busket <AddShoppingCartIcon />
       </Typography>

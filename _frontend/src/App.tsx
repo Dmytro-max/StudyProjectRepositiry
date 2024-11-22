@@ -10,9 +10,8 @@ import Login from "./componets/Login/Login";
 import SignUp from "./componets/SignUp/SignUp";
 import { SideMenu } from "./componets/SideMenu/SideMenu";
 import { Context } from "./main.tsx";
-
-import Authorization from "./componets/Authorization/Authorization";
 import { Busket } from "./componets/Busket/Busket";
+
 function App() {
   const [isActive, setActive] = useState(false);
   const { store } = useContext(Context);
@@ -25,41 +24,45 @@ function App() {
   const MenuToggleActive = () => setActive(!isActive);
 
   return (
-    <>
-      <Router>
-        <Header
-          MenuToggleActive={MenuToggleActive}
-          OpenLoginWindow={setLoginOpen}
-        ></Header>
-        {/* <span>{String(isLoginOpen)}</span> */}
-
-        <LoginWindow isOpen={isLoginOpen}></LoginWindow>
-
-        <Grid2 container sx={{ height: "100vh", overflowX: "scroll" }}>
-          <Grid2
-            size={isActive ? { xs: 12, sm: 3 } : { xs: 0 }}
-            sx={{ transition: "250ms" }}
+    <Router>
+      <Header MenuToggleActive={MenuToggleActive} />
+      <Box sx={{ display: "flex", height: "100vh" }}>
+        {isActive && (
+          <Box
+            sx={{
+              width: { xs: "100%", sm: "240px" },
+              transition: "width 250ms",
+              borderRight: 1,
+              borderColor: "divider",
+            }}
           >
             <SideMenu />
-          </Grid2>
-
-          <Grid2 size={{ xs: 12, sm: 9 }}>
-            <Container sx={{ height: "100%", transition: "50ms" }}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/product/:id" element={<ProductDetails />} />
-                <Route path="/create" element={<AddProductForm />} />
-                <Route path="/Busket" element={<Busket />} />
-              </Routes>
-            </Container>
-          </Grid2>
-        </Grid2>
-      </Router>
-    </>
+          </Box>
+        )}
+        <Box
+          sx={{
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            overflow: "auto",
+          }}
+        >
+          <Container sx={{ p: 2 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/create" element={<AddProductForm />} />
+              <Route path="/signin" element={<Login />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/Busket" element={<Busket />} />
+            </Routes>
+          </Container>
+        </Box>
+      </Box>
+    </Router>
   );
 }
 
 export default App;
-// const Theme = createTheme({
-//   components: {},
-// });
