@@ -18,13 +18,14 @@ const ProductCard: React.FC<ProductProps> = ({
   name,
   price,
   // description,
-  available, coverImageUrl,
+  available,
+  coverImageUrl,
   onClick,
 }) => {
   return (
     <Card
       sx={{
-          maxWidth: 345,
+        maxWidth: 345,
         margin: 2,
         cursor: "pointer",
         transition: "0.3s",

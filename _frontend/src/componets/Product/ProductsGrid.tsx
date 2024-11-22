@@ -21,8 +21,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({ products }) => {
           <Grid
             item
             xs={12} // Full width on extra-small screens
-            sm={4} // Half width on small screens
-            md={3} // One-third width on medium and larger screens
+            sm={6} // Half width on small screens
+            md={4} // One-third width on medium and larger screens
             key={product.id}
           >
             <ProductCard {...product} onClick={productClickHandler} />
