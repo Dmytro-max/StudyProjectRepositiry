@@ -5,6 +5,7 @@
 
 export type { AuthResponseDto } from './models/AuthResponseDto';
 export type { CreateProductDto } from './models/CreateProductDto';
+export type { Pharmacy } from './models/Pharmacy';
 export type { Product } from './models/Product';
 export type { ProductCategory } from './models/ProductCategory';
 export type { SignInDto } from './models/SignInDto';
@@ -14,4 +15,5 @@ export type { User } from './models/User';
 
 export { AuthService } from './services/AuthService';
 export { DefaultService } from './services/DefaultService';
+export { PharmaciesService } from './services/PharmaciesService';
 export { ProductsService } from './services/ProductsService';

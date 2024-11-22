@@ -1,9 +1,11 @@
 import {
   AuthService,
   CreateProductDto,
+  Pharmacy,
   Product,
   ProductCategory,
   ProductsService,
+  PharmaciesService,
   User,
 } from "../api";
 import { makeAutoObservable } from "mobx";
@@ -17,6 +19,7 @@ export default class Store {
   products: Product[] = [];
   filteredProducts: Product[] = [];
   productCategories: ProductCategory[] = [];
+  pharmacies: Pharmacy[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -50,6 +53,10 @@ export default class Store {
     this.filteredProducts = [...products];
   }
 
+  setPharmacies(pharmacies: Pharmacy[]) {
+    this.pharmacies = [...pharmacies];
+  }
+
   async getProducts() {
     try {
       this.setProductsIsLoading(true);
@@ -60,6 +67,20 @@ export default class Store {
       console.error(e);
     } finally {
       this.setProductsIsLoading(false);
+    }
+  }
+
+  async getPharmacies() {
+    try {
+      this.setIsLoading(true);
+      const res = await PharmaciesService.pharmacyControllerFindAllPharmacies();
+      console.log(res);
+      this.setPharmacies(res);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      this.setIsLoading(false);
+      console.log(this.pharmacies);
     }
   }
 

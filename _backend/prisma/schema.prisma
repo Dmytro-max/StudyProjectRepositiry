@@ -51,3 +51,13 @@ model User {
   hash String
   hashRt String?
 }
+
+model Pharmacy {
+  id        String   @id @default(uuid()) 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String
+  address   String
+  lat       String   // Consider using `Decimal` or `Float` if you want to store lat/lng as numbers
+  lng       String   // Same for longitude
+}

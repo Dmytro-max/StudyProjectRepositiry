@@ -11,6 +11,8 @@ import SignUp from "./componets/SignUp/SignUp";
 import { SideMenu } from "./componets/SideMenu/SideMenu";
 import { Context } from "./main.tsx";
 import { Busket } from "./componets/Busket/Busket";
+import "leaflet/dist/leaflet.css";
+import PharmacyMap from "./componets/Pharmacy/PharmacyMap.tsx";
 
 function App() {
   const [isActive, setActive] = useState(true);
@@ -49,16 +51,27 @@ function App() {
             overflow: "auto",
           }}
         >
-          <Container sx={{ p: 2 }}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/product/:id" element={<ProductDetails />} />
-              <Route path="/create" element={<AddProductForm />} />
-              <Route path="/signin" element={<Login />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/Busket" element={<Busket />} />
-            </Routes>
-          </Container>
+          <Routes>
+            {/* Routes inside the Container */}
+            <Route
+              path="*"
+              element={
+                <Container sx={{ p: 2 }}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/create" element={<AddProductForm />} />
+                    <Route path="/signin" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
+                    <Route path="/Busket" element={<Busket />} />
+                  </Routes>
+                </Container>
+              }
+            />
+
+            {/* PharmacyMap route outside of the Container */}
+            <Route path="/pharmacy-map" element={<PharmacyMap />} />
+          </Routes>
         </Box>
       </Box>
     </Router>

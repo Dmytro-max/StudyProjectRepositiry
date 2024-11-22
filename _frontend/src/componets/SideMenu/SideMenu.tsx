@@ -9,6 +9,8 @@ import {
   Button,
 } from "@mui/material";
 import { Context } from "../../main.tsx";
+import { Link } from "react-router-dom";
+import MapIcon from "@mui/icons-material/Map";
 
 // Define a mapping of category names to icon file paths
 const categoryIcons: { [key: string]: string } = {
@@ -20,7 +22,7 @@ const categoryIcons: { [key: string]: string } = {
   "Вироби медичного призначення": "category6.png",
   "Ортопедія та реабілітація": "category7.png",
   "Медична техніка": "category8.png",
-  "Зоотовари": "category9.png",
+  Зоотовари: "category9.png",
 };
 
 const categories = Object.keys(categoryIcons); // Using keys of the categoryIcons as categories
@@ -124,6 +126,28 @@ export const SideMenu: React.FC = () => {
           </div>
         ))}
       </List>
+
+      <Box sx={{ marginTop: 4, textAlign: "center" }}>
+        <Link
+          to="/pharmacy-map"
+          style={{ textDecoration: "none", width: "100%" }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<MapIcon />}
+            sx={{
+              width: "100%", // Make button full width
+              backgroundColor: "#90caf9", // Light blue color
+              "&:hover": {
+                backgroundColor: "#64b5f6", // Slightly darker blue on hover
+              },
+            }}
+          >
+            Карта аптек
+          </Button>
+        </Link>
+      </Box>
     </Box>
   );
 };
