@@ -51,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({ MenuToggleActive }) => {
             display: "flex",
             alignItems: "center",
             gap: 2,
-            minWidth: "1200px", // Ensures the Box stretches to at least 1200px
+            minWidth: "400px", // Ensures the Box stretches to at least 1200px
           }}
         >
           <IconButton
@@ -80,12 +80,20 @@ const Header: React.FC<HeaderProps> = ({ MenuToggleActive }) => {
               <Typography color="inherit" sx={{ ml: 2 }}>
                 {store.user.email}
               </Typography>
-              <Button color="inherit" onClick={handleLogout} sx={{ ml: 2 }}>
+              <Button
+                color="inherit"
+                onClick={handleLogout}
+                sx={{ ml: 2, fontSize: "1.5rem" }}
+              >
                 Logout
               </Button>
             </>
           ) : (
-            <Button color="inherit" onClick={handleLoginClick} sx={{ ml: 2 }}>
+            <Button
+              color="inherit"
+              onClick={handleLoginClick}
+              sx={{ ml: 2, fontSize: "1.5rem" }}
+            >
               Login
             </Button>
           )}

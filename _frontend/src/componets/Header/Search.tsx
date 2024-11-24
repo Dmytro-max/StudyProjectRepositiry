@@ -82,9 +82,10 @@ const Search = () => {
             }}
             sx={{
               "& .MuiOutlinedInput-root": {
-                borderRadius: "20px",
+                borderRadius: "15px",
                 backgroundColor: "#f5f5f5",
                 paddingRight: 1,
+                height: 45,
               },
               "& .MuiOutlinedInput-root:hover": {
                 backgroundColor: "#eaeaea",

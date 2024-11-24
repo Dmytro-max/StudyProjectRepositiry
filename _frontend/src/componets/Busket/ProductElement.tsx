@@ -1,14 +1,7 @@
-import {
-  Button,
-  Grid2,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Grid2, IconButton, Stack, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 // import { Product } from "../../api/models/Product";
-import classes from "./Product.module.css";
+import classes from "./ProductElement.module.css";
 import { useState } from "react";
 
 export const ProductElement = ({ props }) => {
@@ -57,7 +50,12 @@ export const ProductElement = ({ props }) => {
             borderRadius: "0.5rem",
           }}
         >
-          <button className={classes.button}>-</button>
+          <button
+            className={classes.button}
+            onClick={() => setQuantity(quantity - 1)}
+          >
+            -
+          </button>
           <Typography
             component="a"
             id=""
@@ -70,7 +68,12 @@ export const ProductElement = ({ props }) => {
           >
             {quantity}
           </Typography>
-          <button className={classes.button}>+</button>
+          <button
+            className={classes.button}
+            onClick={() => setQuantity(quantity + 1)}
+          >
+            +
+          </button>
         </Stack>
       </Grid2>
       {/* </div> */}

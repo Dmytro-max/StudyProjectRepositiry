@@ -10,7 +10,7 @@ import Login from "./componets/Login/Login";
 import SignUp from "./componets/SignUp/SignUp";
 import { SideMenu } from "./componets/SideMenu/SideMenu";
 import { Context } from "./main.tsx";
-import { Busket } from "./componets/Busket/Busket";
+import Busket from "./componets/Busket/Busket";
 
 function App() {
   const [isActive, setActive] = useState(false);
@@ -20,8 +20,22 @@ function App() {
       store.checkAuth();
     }
   }, []);
+  useEffect(() => {
+    // if (localStorage.getItem("cartProducts")) {
+    //   const products = JSON.parse(
+    //     localStorage.getItem("cartProducts") as string
+    //   );
+    //   store.setCartProductsIds(products);
+    //   console.log(store.getCartProductsIds());
+    // }
+  });
 
   const MenuToggleActive = () => setActive(!isActive);
+
+  onbeforeunload = () => {
+    const products = store.getCartProductsIds();
+    localStorage.setItem("cartProducts", JSON.stringify(products));
+  };
 
   return (
     <Router>
@@ -45,11 +59,11 @@ function App() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "start",
             overflow: "auto",
           }}
         >
-          <Container sx={{ p: 2 }}>
+          <Container sx={{ p: 2, paddingTop: "2.5rem" }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/product/:id" element={<ProductDetails />} />

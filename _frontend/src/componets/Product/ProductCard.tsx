@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Product } from "../../api";
 import pillsThumbnail from "../../assets/pillsThumbnail.svg";
+import { Context } from "../../main";
 
 const thumbnail = pillsThumbnail;
 interface ProductProps extends Product {
@@ -22,10 +23,12 @@ const ProductCard: React.FC<ProductProps> = ({
   coverImageUrl,
   onClick,
 }) => {
+  const { store } = useContext(Context);
   return (
     <Card
       sx={{
-        maxWidth: 345,
+        maxWidth: 320,
+        height: 360,
         margin: 2,
         cursor: "pointer",
         transition: "0.3s",
@@ -42,7 +45,16 @@ const ProductCard: React.FC<ProductProps> = ({
         alt={name}
         sx={{ minWidth: "" }}
       />
-      <CardContent sx={{ justifyItems: "end" }}>
+      <CardContent
+        sx={{
+          height: 200,
+          display: "flex",
+          justifyItems: "end",
+          alignItems: "end",
+          flexDirection: "column",
+          justifyContent: "space-evenly",
+        }}
+      >
         <Typography gutterBottom variant="h5" component="div">
           {name}
         </Typography>
@@ -55,6 +67,7 @@ const ProductCard: React.FC<ProductProps> = ({
           variant="contained"
           color="primary" // Set to a valid color
           disabled={!available} // Disable button if not available
+          onClick={() => store.addCartProductId(id)}
           sx={{ marginTop: 2, display: "inline-flex", minWidth: 0 }}
         >
           {available ? "Add to Cart  " : "Out of Stock  "}

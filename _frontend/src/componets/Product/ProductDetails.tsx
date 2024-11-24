@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Typography,
@@ -13,6 +13,7 @@ import { Product } from "../../api/models/Product";
 import { ProductsService } from "../../api";
 
 import pillsThumbnail from "../../assets/pillsThumbnail.svg";
+import { Context } from "../../main";
 
 const thumbnail = pillsThumbnail;
 
@@ -22,6 +23,7 @@ interface ProductDetailProps {
 
 const ProductDetail: React.FC<ProductDetailProps> = () => {
   const { id } = useParams<{ id: string }>();
+  const { store } = useContext(Context);
   const [product, setProduct] = useState<Product | null>(null);
 
   useEffect(() => {
@@ -32,6 +34,7 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
             id
           );
           setProduct(res);
+          console.log(res);
         }
       } catch (error) {
         console.error("Failed to fetch products:", error);
@@ -41,7 +44,6 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
   }, []);
 
   // For demonstration, here is a dummy product data
-
   if (!product) {
     return (
       <>
@@ -106,6 +108,7 @@ const ProductDetail: React.FC<ProductDetailProps> = () => {
           aria-label=""
           variant="contained"
           color="primary"
+          onClick={() => store.addCartProductId(id || "")}
           sx={{ marginTop: 2, justifyContent: "space-between", width: "90%" }}
         >
           Add to Cart <AddShoppingCartIcon />

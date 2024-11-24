@@ -15,6 +15,7 @@ export default class Store {
   productsIsLoading = false;
   products: Product[] = [];
   filteredProducts: Product[] = [];
+  cartProductsIds: { [key: string]: number } = {};
 
   constructor() {
     makeAutoObservable(this);
@@ -42,6 +43,28 @@ export default class Store {
 
   setFilteredProducts(products: Product[]) {
     this.filteredProducts = [...products];
+  }
+
+  setCartProductsIds(products: { [key: string]: number }) {
+    this.cartProductsIds = products;
+  }
+
+  addCartProductId(product_id: string) {
+    if (!this.getCartProductsIds()) {
+      this.addCartProductId(JSON.stringify({ product_id: 1 }));
+    } else {
+      // const products = this.getCartProductsIds() as object;
+      if (this.cartProductsIds[product_id]) {
+        this.cartProductsIds[product_id] += 1;
+      } else {
+        this.cartProductsIds[product_id] = 1;
+      }
+      // this.setCartProductsIds((products));
+    }
+  }
+
+  getCartProductsIds() {
+    return this.cartProductsIds;
   }
 
   async getProducts() {
